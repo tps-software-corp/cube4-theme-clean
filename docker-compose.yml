@@ -13,8 +13,8 @@ services:
       - "8080:80"
       - "8081:443"
     volumes:
-      - ./app:/var/www/html/app/template/docker
-      - ./html:/var/www/html/html/template/docker
+      - ../app:/var/www/html/app/template/docker
+      - ../html:/var/www/html/html/template/docker
     networks:
       - backend
     depends_on:
