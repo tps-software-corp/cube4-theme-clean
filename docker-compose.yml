@@ -1,0 +1,45 @@
+version: '3'
+networks:
+  backend:
+    driver: bridge
+volumes:
+  mysql_data:
+    driver: local
+services:
+  apache:
+    build:
+      context: .
+    ports:
+      - "8080:80"
+      - "8081:443"
+    volumes:
+      - ./app:/var/www/html/app/template/docker
+      - ./html:/var/www/html/html/template/docker
+    networks:
+      - backend
+    depends_on:
+      - "db"
+  db:
+    image: tabenguyen/eccube4-mysql:1.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=eccube4
+      - MYSQL_USER=eccube4
+      - MYSQL_PASSWORD=eccube4
+      - MYSQL_ROOT_PASSWORD=eccubedocker
+    networks:
+      - backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - PMA_ARBITRARY=1
+      - MYSQL_USER=eccube4
+      - MYSQL_PASSWORD=eccube4
+      - MYSQL_ROOT_PASSWORD=eccubedocker
+    ports:
+      - "8082:80"
+    depends_on:
+      - "db"
+    networks:
+      - backend
