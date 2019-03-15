@@ -4,12 +4,36 @@ const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 const es = require('event-stream');
+var watch = require('gulp-watch');
 
 const srcPattern = [
     'default',
     'admin',
     'docker'
 ];
+// Watch for dev
+gulp.task('watch', function () {
+    let events = srcPattern.map((target) => {
+        return watch(`./html/template/${target}/assets/scss/**/*.scss`, function () {
+            gulp.src(`./html/template/${target}/assets/scss/**/*.scss`)
+            .pipe($.plumber({
+                errorHandler: $.notify.onError('<%= error.message %>')
+            }))
+            .pipe($.sourcemaps.init())
+            .pipe(sass({
+                sourceMap: true
+            }))
+            .pipe($.pleeease({
+                autoprefixer: true,
+                minifier: false,
+                mqpacker: true
+            }))
+            .pipe($.sourcemaps.write('./maps'))
+            .pipe(gulp.dest(`./html/template/${target}/assets/css/`))
+        })
+    });
+    return es.concat(events);
+});
 
 // CSS出力
 gulp.task('sass', function() {
