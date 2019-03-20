@@ -15,8 +15,7 @@ services:
     networks:
       - backend
   apache:
-    build:
-      context: ./apache
+    image: tabenguyen/eccube4-apache:1.4
     ports:
       - "8080:80"
       - "8081:443"
