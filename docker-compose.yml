@@ -10,18 +10,18 @@ services:
     build:
       context: ./npm
     volumes:
-      - ./theme/app:/var/www/html/app/template/TPS
-      - ./theme/html:/var/www/html/html/template/TPS
+      - ./theme/app:/var/www/html/app/template/default
+      - ./theme/html:/var/www/html/html/template/default
     networks:
       - backend
   apache:
-    image: tabenguyen/eccube4-apache:1.4
+    image: tabenguyen/eccube4-apache:1.5
     ports:
       - "8080:80"
       - "8081:443"
     volumes:
-      - ./theme/app:/var/www/html/app/template/TPS
-      - ./theme/html:/var/www/html/html/template/TPS
+      - ./theme/app:/var/www/html/app/template/default
+      - ./theme/html:/var/www/html/html/template/default
     networks:
       - backend
     depends_on:

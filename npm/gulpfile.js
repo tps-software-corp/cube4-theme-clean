@@ -8,8 +8,7 @@ var watch = require('gulp-watch');
 
 const srcPattern = [
     'default',
-    'admin',
-    'docker'
+    'admin'
 ];
 // Watch for dev
 gulp.task('watch', function () {
