@@ -15,5 +15,8 @@ Goto http://localhost:8080
 ```
 5. Go to home page and check your theme
 ```
-Goto http://localhost:8080
+User page: http://localhost:8080
+Admin page: http://localhost:8080
+Admin user: admin
+Admin password: password
 ```

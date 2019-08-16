@@ -10,8 +10,8 @@ services:
     build:
       context: ./npm
     volumes:
-      - ./theme/app:/var/www/html/app/template/default
-      - ./theme/html:/var/www/html/html/template/default
+      - ../theme-fitspa/app:/var/www/html/app/template/default
+      - ../theme-fitspa/html:/var/www/html/html/template/default
     networks:
       - backend
   apache:
@@ -20,16 +20,18 @@ services:
       - "8080:80"
       - "8081:443"
     volumes:
-      - ./theme/app:/var/www/html/app/template/default
-      - ./theme/html:/var/www/html/html/template/default
+      - ../theme-fitspa/app:/var/www/html/app/template/default
+      - ../theme-fitspa/html:/var/www/html/html/template/default
     networks:
       - backend
     depends_on:
       - "db"
   db:
     image: mysql:5.7
+    command: mysqld --user=root
     volumes:
       - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/eccube4.sql:/docker-entrypoint-initdb.d/eccube4.sql
     environment:
       - MYSQL_DATABASE=eccube4
       - MYSQL_USER=eccube4
